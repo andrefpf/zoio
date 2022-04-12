@@ -1,5 +1,5 @@
-#ifndef MATIX_H_
-#define MATIX_H_
+#ifndef MATRIX_H_
+#define MATRIX_H_
 
 #include <vector>
 
