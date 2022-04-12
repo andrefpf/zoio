@@ -1,5 +1,6 @@
 #include <matrix.hpp>
 #include <iostream>
+#include <vector>
 
 #include "acutest.h"
 
@@ -106,8 +107,8 @@ void test_set_rows_cols() {
 }   
 
 TEST_LIST = {
-    { "insert/at", test_insert_at },
-    { "get rows/cols", test_get_rows_cols },
-    { "set rows/cols", test_set_rows_cols },
+    { "insert/at",          test_insert_at },
+    { "get rows/cols",      test_get_rows_cols },
+    { "set rows/cols",      test_set_rows_cols },
     { NULL, NULL }
 };

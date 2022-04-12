@@ -21,13 +21,7 @@ build/test_%.o: tests/test_%.cpp .FORCE
 	@./$@
 
 build/%.o: src/%.cpp
-	g++ $< -o $@ -I include/ -c
+	g++ $< -o $@ -I include/ -c -Wfatal-errors
 
 clean:
 	@rm -rf ./build/*
-
-# g++ src/hello.cpp -o hello.o -I include/ -c
-
-# g++ tests/test_hello.cpp -I include/ hello.o
-
-# g++ hello.o hola.o -o ar -shared
