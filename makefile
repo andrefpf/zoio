@@ -18,7 +18,7 @@ lib: $(OBJ_FILES)
 build/test_%.o: tests/test_%.cpp .FORCE
 	@echo
 	@g++ $< -o $@ -I include/ build/libzoio.so
-	@./$@
+	@./$@ --time
 
 build/%.o: src/%.cpp
 	g++ $< -o $@ -I include/ -c -Wfatal-errors
