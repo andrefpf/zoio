@@ -26,7 +26,30 @@ void test_dwt_1d() {
         TEST_CHECK(original[i] == tmp[i]);
 }
 
+void test_long_dwt_1d() {
+    int levels = 23;
+
+    std::vector<int> original;
+    
+    for (int i = 0; i < (1 << levels); i++) {
+        original.push_back(i);
+    }
+
+    std::vector<int> tmp(original.begin(), original.end());
+
+    for (int i = 0; i < original.size(); i++)
+        TEST_CHECK(original[i] == tmp[i]);
+
+    DWT::foward(tmp, levels);
+    DWT::backward(tmp, levels);
+    
+    for (int i = 0; i < original.size(); i++)
+        TEST_CHECK(original[i] == tmp[i]);
+
+}
+
 TEST_LIST = {
-    {"DWT 1D", test_dwt_1d},
-    {NULL, NULL}
+    { "DWT 1D",         test_dwt_1d },
+    { "Long DWT 1D",    test_long_dwt_1d},
+    { NULL, NULL }
 };
