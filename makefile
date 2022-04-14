@@ -9,6 +9,7 @@ $(shell mkdir -p $(DIRS))
 
 # This forces some phonys to be recompiled
 .FORCE:
+.PHONY: lib clean tests
 
 tests: lib $(OBJ_TESTS)
 
@@ -21,7 +22,7 @@ build/test_%.o: tests/test_%.cpp .FORCE
 	@./$@ --time
 
 build/%.o: src/%.cpp
-	g++ $< -o $@ -I include/ -c -Wfatal-errors
+	g++ $< -o $@ -I include/ -c -Wfatal-errors -fPIC
 
 clean:
 	@rm -rf ./build/*
