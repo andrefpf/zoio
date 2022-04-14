@@ -68,6 +68,53 @@ int HuffmanNode::level(HuffmanNode & root, HuffmanNode & node) {
     return -1;
 }
 
+HuffmanNode & HuffmanNode::find(int val) {
+    // TODO: It is possible to optimize this by knowing the 
+    // preffered way the tree is going to grow
+
+    HuffmanNode * tmp;
+
+    if (data == val)
+        return *this;
+
+    if (_left) {
+        tmp = &left().find(val);
+        if (tmp)
+            return *tmp;
+    }
+
+    if (_right) {
+        return right().find(val);
+    }    
+
+    tmp = 0;
+    return *tmp;
+}
+
+void HuffmanNode::path(HuffmanNode & root, 
+                       HuffmanNode & node, 
+                       std::vector<bool> & path) 
+{
+    HuffmanNode * n = &node;
+    int distance = 0;
+    bool direction;
+
+    while (n != &root) {
+
+        // remove inserted elements avoid dirtying the array
+        if ((n == 0) || (&n->father() == 0)) {
+            path.erase(path.end()-distance, path.end());
+            return;
+        }
+
+        distance++;
+        direction = n == &n->father().left();
+        path.push_back(direction);
+        n = &n->father();
+    }
+}
+
+
 
 // Huffman
 
@@ -92,6 +139,10 @@ Huffman::Huffman(const HuffmanNode & tree) {
 
 std::vector<bool> Huffman::encode(const std::vector<int> & input) {
     std::vector<bool> output;
+
+    for (auto it: input) {
+
+    }
 
     output = {0,1,1,0,1,1};
 

@@ -22,10 +22,12 @@ public:
     HuffmanNode & right() { return *_right; }
     HuffmanNode & father() { return *_father; }
 
+    HuffmanNode & find(int val);
     void inorder(std::vector<HuffmanNode *> & nodes);
     void inorder_leafs(std::vector<HuffmanNode *> & nodes);
 
     static int level(HuffmanNode & root, HuffmanNode & node);
+    static void path(HuffmanNode & root, HuffmanNode & node, std::vector<bool> & path);  
 
 public:
     int data;

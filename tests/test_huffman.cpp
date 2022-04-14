@@ -42,7 +42,41 @@ void test_create_nodes() {
 
 }
 
-void test_tree_order() {
+void test_create_tree() {
+    HuffmanNode tree;
+    std::unordered_map<int, int> dict;
+    std::vector<HuffmanNode *> nodes;
+    std::vector<int> expected;
+    
+    dict = {
+        {1, 1},
+        {2, 2},
+        {3, 3},
+        {4, 4}
+    };
+
+    nodes = Huffman::create_nodes(dict);
+    tree = Huffman::create_tree(nodes);
+
+    nodes.clear();
+    tree.inorder(nodes);
+    expected = {1, 3, 2, 6, 3, 10, 4};
+
+    for (int i = 0; i < expected.size(); i++) {
+        TEST_CHECK(nodes[i]->freq == expected[i]);
+    }
+
+    nodes.clear();
+    expected.clear();
+    tree.inorder_leafs(nodes);
+    expected = {1, 2, 3, 4};
+
+    for (int i = 0; i < expected.size(); i++) {
+        TEST_CHECK(nodes[i]->data == expected[i]);
+    }
+}   
+
+void test_tree() {
     /*
            Create a tree structure like this:
         
@@ -105,42 +139,23 @@ void test_tree_order() {
         TEST_CHECK(tmp[i]->freq == expected[i]);
     }
 
-}
+    std::vector<bool> expected_path = {0, 1};
+    std::vector<bool> path;
 
-void test_create_tree() {
-    HuffmanNode tree;
-    std::unordered_map<int, int> dict;
-    std::vector<HuffmanNode *> nodes;
-    std::vector<int> expected;
+    HuffmanNode::path(nodes[0], nodes[4], path);
+
+    for (int i = 0; i < expected_path.size(); i++) {
+        TEST_CHECK(path[i] == expected_path[i]);
+    }
+
+    HuffmanNode * node;
     
-    dict = {
-        {1, 1},
-        {2, 2},
-        {3, 3},
-        {4, 4}
-    };
+    node = &nodes[0].find(3);
+    TEST_CHECK(node == &nodes[2]);
 
-    nodes = Huffman::create_nodes(dict);
-    tree = Huffman::create_tree(nodes);
-
-    nodes.clear();
-    tree.inorder(nodes);
-    expected = {1, 3, 2, 6, 3, 10, 4};
-
-    for (int i = 0; i < expected.size(); i++) {
-        TEST_CHECK(nodes[i]->freq == expected[i]);
-    }
-
-    nodes.clear();
-    expected.clear();
-    tree.inorder_leafs(nodes);
-    expected = {1, 2, 3, 4};
-
-    for (int i = 0; i < expected.size(); i++) {
-        TEST_CHECK(nodes[i]->data == expected[i]);
-    }
-}   
-
+    node = &nodes[0].find(2);
+    TEST_CHECK(node == &nodes[4]);
+}
 
 void test_huffman_encode() {
     std::vector<int> original = {4,0,0,2,8,9,2,2};
@@ -149,22 +164,21 @@ void test_huffman_encode() {
 
     Huffman huff(original);
     output = huff.encode(original);
-
 }
 
 void test_huffman_decode() {
+
 }
 
 void test_huffman_encode_decode() {
-
 }
 
 
 TEST_LIST = {
     { "Create table",               test_create_table },
     { "Create nodes",               test_create_nodes },
-    { "Tree order",                 test_tree_order },
     { "Create tree",                test_create_tree },
+    { "Tree functions",                 test_tree },
     { "Encode Huffman",             test_huffman_encode},
     { "Decode Huffman",             test_huffman_decode},
     { "Encode/Decode Huffman",      test_huffman_encode_decode},
