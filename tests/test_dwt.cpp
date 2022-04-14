@@ -5,25 +5,26 @@
 #include "acutest.h"
 
 
-void test_dwt_1d() {
+void test_encode_dwt_1d() {
     std::vector<int> original{1, 2, 3, 4, 5, 6, 7, 8};
     std::vector<int> expected{1, 4, 2, 2, 1, 1, 1, 1};
-    std::vector<int> tmp(original.begin(), original.end());
 
     int levels = 3;
-
-    for (int i = 0; i < original.size(); i++)
-        TEST_CHECK(original[i] == tmp[i]);
-
-    DWT::foward(tmp, levels);
+    DWT::foward(original, levels);
 
     for (int i = 0; i < expected.size(); i++)
-        TEST_CHECK(expected[i] == tmp[i]);
+        TEST_CHECK(expected[i] == original[i]);
+}
 
-    DWT::backward(tmp, levels);
+void test_decode_dwt_1d() {
+    std::vector<int> original{1, 5, 2, 2, 1, 1, 1, 1};
+    std::vector<int> expected{1, 2, 3, 4, 5, 6, 7, 8};
     
-    for (int i = 0; i < original.size(); i++)
-        TEST_CHECK(original[i] == tmp[i]);
+    int levels = 2;
+    DWT::backward(original, levels);
+
+    for (int i = 0; i < expected.size(); i++)
+        TEST_CHECK(expected[i] == original[i]);
 }
 
 void test_long_dwt_1d() {
@@ -49,7 +50,8 @@ void test_long_dwt_1d() {
 }
 
 TEST_LIST = {
-    { "DWT 1D",         test_dwt_1d },
-    { "Long DWT 1D",    test_long_dwt_1d},
+    { "Encode DWT 1D",         test_encode_dwt_1d },
+    { "Dencode DWT 1D",        test_decode_dwt_1d },
+    { "Encode/Decode DWT 1D",    test_long_dwt_1d},
     { NULL, NULL }
 };

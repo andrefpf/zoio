@@ -5,7 +5,7 @@
 #include "acutest.h"
 
 
-void test_foward_rle() {
+void test_encode_rle() {
     std::vector<int> original = {0,0,0,0,0,2,0,0,0,4,0,0,0,0,0,0,6,0,0,2,0,1,0,0,0,0,0,0,0,6,0,0,0};
     std::vector<int> expected = {0,5,2,0,3,4,0,6,6,0,2,2,0,1,1,0,7,6,0,3};
 
@@ -16,7 +16,7 @@ void test_foward_rle() {
 
 }
 
-void test_backward_rle() {
+void test_decode_rle() {
     std::vector<int> original = {0,5,2,0,3,4,0,6,6,0,2,2,0,1,1,0,7,6,0,3};
     std::vector<int> expected = {0,0,0,0,0,2,0,0,0,4,0,0,0,0,0,0,6,0,0,2,0,1,0,0,0,0,0,0,0,6,0,0,0};
 
@@ -27,7 +27,7 @@ void test_backward_rle() {
 
 }
 
-void test_long_rle() {
+void test_encode_decode_rle() {
     std::vector<int> original;
 
     srand(time(NULL));
@@ -51,8 +51,8 @@ void test_long_rle() {
 }
 
 TEST_LIST = {
-    { "Foward RLE", test_foward_rle },
-    { "Backward RLE", test_backward_rle },
-    { "Long RLE", test_long_rle },
+    { "Encode RLE", test_encode_rle },
+    { "Decode RLE", test_decode_rle },
+    { "Encode/Decode RLE", test_encode_decode_rle },
     { NULL, NULL }
 };
