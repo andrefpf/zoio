@@ -80,6 +80,12 @@ void test_tree_order() {
     TEST_CHECK(nodes[3].is_leaf());
     TEST_CHECK(nodes[4].is_leaf());
 
+    TEST_CHECK(HuffmanNode::level(nodes[0], nodes[0]) == 0);
+    TEST_CHECK(HuffmanNode::level(nodes[0], nodes[1]) == 1);
+    TEST_CHECK(HuffmanNode::level(nodes[0], nodes[2]) == 1);
+    TEST_CHECK(HuffmanNode::level(nodes[0], nodes[3]) == 2);
+    TEST_CHECK(HuffmanNode::level(nodes[0], nodes[4]) == 2);
+
     std::vector<int> expected;
     std::vector<HuffmanNode *> tmp;
 
@@ -133,13 +139,34 @@ void test_create_tree() {
     for (int i = 0; i < expected.size(); i++) {
         TEST_CHECK(nodes[i]->data == expected[i]);
     }
-
 }   
 
+
+void test_huffman_encode() {
+    std::vector<int> original = {4,0,0,2,8,9,2,2};
+    std::vector<bool> expected;
+    std::vector<bool> output;
+
+    Huffman huff(original);
+    output = huff.encode(original);
+
+}
+
+void test_huffman_decode() {
+}
+
+void test_huffman_encode_decode() {
+
+}
+
+
 TEST_LIST = {
-    { "create table",       test_create_table },
-    { "create nodes",       test_create_nodes },
-    { "tree order",        test_tree_order },
-    { "create tree",        test_create_tree },
+    { "Create table",               test_create_table },
+    { "Create nodes",               test_create_nodes },
+    { "Tree order",                 test_tree_order },
+    { "Create tree",                test_create_tree },
+    { "Encode Huffman",             test_huffman_encode},
+    { "Decode Huffman",             test_huffman_decode},
+    { "Encode/Decode Huffman",      test_huffman_encode_decode},
     { NULL, NULL }
 };

@@ -7,7 +7,7 @@
 #include <unordered_map>
 
 
-struct HuffmanNode {
+class HuffmanNode {
 
 public:
     HuffmanNode() {}
@@ -24,6 +24,8 @@ public:
 
     void inorder(std::vector<HuffmanNode *> & nodes);
     void inorder_leafs(std::vector<HuffmanNode *> & nodes);
+
+    static int level(HuffmanNode & root, HuffmanNode & node);
 
 public:
     int data;
@@ -52,11 +54,11 @@ public:
     Huffman(const std::unordered_map<int, int> & table);
     Huffman(const HuffmanNode & tree);
 
-    std::vector<bool> & encode(std::vector<int> & input);
-    std::vector<int> & decode(std::vector<bool> & input);
+    std::vector<bool> encode(const std::vector<int> & input);
+    std::vector<int> decode(std::vector<bool> & input);
 
     static std::unordered_map<int, int> 
-    create_table(std::vector<int> & data);
+    create_table(const std::vector<int> & data);
 
     static std::vector<HuffmanNode *> 
     create_nodes(const std::unordered_map<int, int> & table);

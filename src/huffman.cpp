@@ -47,29 +47,63 @@ void HuffmanNode::inorder_leafs(std::vector<HuffmanNode *> & nodes) {
     }
 }
 
+int HuffmanNode::level(HuffmanNode & root, HuffmanNode & node) {
+    if (&root == 0)
+        return -1;
+
+    if (&node == 0)
+        return -1; 
+    
+    if (&root == &node)
+        return 0;
+
+    int tmp = level(root.left(), node);
+    if (tmp != -1)
+        return tmp + 1;
+
+    tmp = level(root.right(), node);
+    if (tmp != -1)
+        return tmp + 1;
+
+    return -1;
+}
+
+
 // Huffman
 
-// Huffman::Huffman(const std::vector<int> & data) {
+Huffman::Huffman(const std::vector<int> & data) {
+    std::unordered_map<int, int> table;
+    std::vector<HuffmanNode *> nodes;
 
-// }
+    table = create_table(data);
+    nodes = create_nodes(table);
+    _tree = create_tree(nodes);
+}
 
-// Huffman::Huffman(const std::unordered_map<int, int> & table) {
-    
-// }
+Huffman::Huffman(const std::unordered_map<int, int> & table) {
+    std::vector<HuffmanNode *> nodes;
+    nodes = create_nodes(table);
+    _tree = create_tree(nodes);
+}
 
-// Huffman::Huffman(const HuffmanNode & tree) {
+Huffman::Huffman(const HuffmanNode & tree) {
+    _tree = tree;
+}
 
-// }
+std::vector<bool> Huffman::encode(const std::vector<int> & input) {
+    std::vector<bool> output;
 
-// std::vector<bool> & Huffman::encode(std::vector<int> & input) {
+    output = {0,1,1,0,1,1};
 
-// }
+
+    return output;
+}
 
 // std::vector<int> & Huffman::decode(std::vector<bool> & input) {
 
 // }
 
-std::unordered_map<int, int> Huffman::create_table(std::vector<int> & data) {
+std::unordered_map<int, int> Huffman::create_table(const std::vector<int> & data) {
     std::unordered_map<int, int> dict;
     bool key_exists;
 
@@ -92,7 +126,7 @@ std::vector<HuffmanNode *> Huffman::create_nodes(const std::unordered_map<int, i
     HuffmanNode * node;
 
     for (auto pair: table) {
-        // TODO: fix this to prevent memory leaks
+        // TODO: change this to shared_ptr to prevent memory leaks
         node = new HuffmanNode(pair.first, pair.second);
         nodes.push_back(node);
     }
