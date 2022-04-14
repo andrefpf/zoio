@@ -1,6 +1,54 @@
 #include <huffman.hpp>
 #include <iostream>
 
+// HuffmanNode
+
+bool HuffmanNode::is_leaf() {
+    return (_left == 0) && (_right == 0);
+}
+
+void HuffmanNode::father(HuffmanNode & node) {
+    _father = &node;
+}
+
+void HuffmanNode::left(HuffmanNode & node) {
+    _left = &node;
+    node._father = this;
+}
+
+void HuffmanNode::right(HuffmanNode & node) {
+    _right = &node;
+    node._father = this;
+}
+
+void HuffmanNode::inorder(std::vector<HuffmanNode *> & nodes) {
+    if (_left) {
+        left().inorder(nodes);
+    }
+
+    nodes.push_back(this);
+
+    if (_right) {
+        right().inorder(nodes);
+    }
+}
+
+void HuffmanNode::inorder_leafs(std::vector<HuffmanNode *> & nodes) {
+    if (_left) {
+        left().inorder_leafs(nodes);
+    }
+
+    if (is_leaf()) {
+        nodes.push_back(this);
+    }
+
+    if (_right) {
+        right().inorder_leafs(nodes);
+    }
+}
+
+// Huffman
+
 // Huffman::Huffman(const std::vector<int> & data) {
 
 // }
@@ -76,3 +124,7 @@ HuffmanNode & Huffman::create_tree(const std::vector<HuffmanNode *> & nodes) {
 
     return *node;
 }
+
+
+
+

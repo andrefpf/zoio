@@ -13,55 +13,17 @@ public:
     HuffmanNode() {}
     HuffmanNode(int data_, int freq_): data(data_), freq(freq_) {}
 
-    bool is_leaf() {
-        return (_left == 0) && (_right == 0);
-    }
-
-    void father(HuffmanNode & node) {
-        _father = &node;
-    }
-
-    void left(HuffmanNode & node) {
-        _left = &node;
-        node._father = this;
-    }
-
-    void right(HuffmanNode & node) {
-        _right = &node;
-        node._father = this;
-    }
+    bool is_leaf();
+    void father(HuffmanNode & node);
+    void left(HuffmanNode & node);
+    void right(HuffmanNode & node);
 
     HuffmanNode & left() { return *_left; }
     HuffmanNode & right() { return *_right; }
     HuffmanNode & father() { return *_father; }
 
-
-    void inorder(std::vector<HuffmanNode *> & nodes) {
-        if (_left) {
-            left().inorder(nodes);
-        }
-
-        nodes.push_back(this);
-
-        if (_right) {
-            right().inorder(nodes);
-        }
-    }
-
-    void inorder_leafs(std::vector<HuffmanNode *> & nodes) {
-        if (_left) {
-            left().inorder_leafs(nodes);
-        }
-
-        if (is_leaf()) {
-            nodes.push_back(this);
-        }
-
-        if (_right) {
-            right().inorder_leafs(nodes);
-        }
-    }
-
+    void inorder(std::vector<HuffmanNode *> & nodes);
+    void inorder_leafs(std::vector<HuffmanNode *> & nodes);
 
 public:
     int data;
