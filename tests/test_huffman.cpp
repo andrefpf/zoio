@@ -178,11 +178,6 @@ void test_huffman_encode() {
     for (int i = 0; i < expected.size(); i++) {
         TEST_CHECK(expected[i] == output[i]);
     }
-
-    for (auto it: output) {
-        std::cout << it << " ";
-    }
-    std::cout << std::endl;
 }
 
 void test_huffman_decode() {
