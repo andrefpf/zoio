@@ -23,11 +23,11 @@ public:
     HuffmanNode & father() { return *_father; }
 
     HuffmanNode & find(int val);
+    std::vector<bool> path(HuffmanNode & node);  
+    int distance(HuffmanNode & node);
+    
     void inorder(std::vector<HuffmanNode *> & nodes);
     void inorder_leafs(std::vector<HuffmanNode *> & nodes);
-
-    static int level(HuffmanNode & root, HuffmanNode & node);
-    static void path(HuffmanNode & root, HuffmanNode & node, std::vector<bool> & path);  
 
 public:
     int data;
@@ -43,10 +43,8 @@ public:
 
 class MostFrequent {
 public:
-    bool operator() (HuffmanNode * a, HuffmanNode * b) {
-        return a->freq > b->freq;
-    }
-}; // MostFrequent
+    bool operator() (HuffmanNode * a, HuffmanNode * b);
+};
 
 
 class Huffman {
@@ -54,10 +52,12 @@ class Huffman {
 public:
     Huffman(const std::vector<int> & data);
     Huffman(const std::unordered_map<int, int> & table);
-    Huffman(const HuffmanNode & tree);
+    Huffman(HuffmanNode & tree);
 
     std::vector<bool> encode(const std::vector<int> & input);
     std::vector<int> decode(std::vector<bool> & input);
+
+    HuffmanNode & root();
 
     static std::unordered_map<int, int> 
     create_table(const std::vector<int> & data);
@@ -70,7 +70,7 @@ public:
 
 private:
     std::unordered_map<int, int> _table;
-    HuffmanNode _tree;
+    HuffmanNode * _tree;
 
 }; // Huffman
 

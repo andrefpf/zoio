@@ -44,10 +44,12 @@ void test_create_nodes() {
 
 void test_create_tree() {
     HuffmanNode tree;
+    HuffmanNode * node; 
     std::unordered_map<int, int> dict;
     std::vector<HuffmanNode *> nodes;
     std::vector<int> expected;
     
+    // Tree 1
     dict = {
         {1, 1},
         {2, 2},
@@ -60,19 +62,30 @@ void test_create_tree() {
 
     nodes.clear();
     tree.inorder(nodes);
-    expected = {1, 3, 2, 6, 3, 10, 4};
+    expected = {4, 10, 3, 6, 1, 3, 2};
 
     for (int i = 0; i < expected.size(); i++) {
         TEST_CHECK(nodes[i]->freq == expected[i]);
     }
 
+    // Tree 2
+    dict = {
+        {4, 1},
+        {0, 2},
+        {2, 3},
+        {8, 1},
+        {9, 1}
+    };
+
+    nodes = Huffman::create_nodes(dict);
+    tree = Huffman::create_tree(nodes);
+
     nodes.clear();
-    expected.clear();
-    tree.inorder_leafs(nodes);
-    expected = {1, 2, 3, 4};
+    tree.inorder(nodes);
+    expected = {1, 3, 2, 8, 1, 2, 1, 5, 3};
 
     for (int i = 0; i < expected.size(); i++) {
-        TEST_CHECK(nodes[i]->data == expected[i]);
+        TEST_CHECK(nodes[i]->freq == expected[i]);
     }
 }   
 
@@ -106,7 +119,6 @@ void test_tree() {
     nodes[1].left(nodes[3]);
     nodes[1].right(nodes[4]);
 
-
     TEST_CHECK(!nodes[0].is_leaf());
     TEST_CHECK(!nodes[1].is_leaf());
 
@@ -114,11 +126,11 @@ void test_tree() {
     TEST_CHECK(nodes[3].is_leaf());
     TEST_CHECK(nodes[4].is_leaf());
 
-    TEST_CHECK(HuffmanNode::level(nodes[0], nodes[0]) == 0);
-    TEST_CHECK(HuffmanNode::level(nodes[0], nodes[1]) == 1);
-    TEST_CHECK(HuffmanNode::level(nodes[0], nodes[2]) == 1);
-    TEST_CHECK(HuffmanNode::level(nodes[0], nodes[3]) == 2);
-    TEST_CHECK(HuffmanNode::level(nodes[0], nodes[4]) == 2);
+    TEST_CHECK(nodes[0].distance(nodes[0]) == 0);
+    TEST_CHECK(nodes[0].distance(nodes[1]) == 1);
+    TEST_CHECK(nodes[0].distance(nodes[2]) == 1);
+    TEST_CHECK(nodes[0].distance(nodes[3]) == 2);
+    TEST_CHECK(nodes[0].distance(nodes[4]) == 2);
 
     std::vector<int> expected;
     std::vector<HuffmanNode *> tmp;
@@ -140,9 +152,7 @@ void test_tree() {
     }
 
     std::vector<bool> expected_path = {0, 1};
-    std::vector<bool> path;
-
-    HuffmanNode::path(nodes[0], nodes[4], path);
+    std::vector<bool> path = nodes[0].path(nodes[4]);
 
     for (int i = 0; i < expected_path.size(); i++) {
         TEST_CHECK(path[i] == expected_path[i]);
@@ -159,11 +169,20 @@ void test_tree() {
 
 void test_huffman_encode() {
     std::vector<int> original = {4,0,0,2,8,9,2,2};
-    std::vector<bool> expected;
+    std::vector<bool> expected = {1,0,0, 0,1, 0,1, 1,1, 1,0,1, 0,0, 1,1, 1,1};
     std::vector<bool> output;
 
     Huffman huff(original);
     output = huff.encode(original);
+
+    for (int i = 0; i < expected.size(); i++) {
+        TEST_CHECK(expected[i] == output[i]);
+    }
+
+    for (auto it: output) {
+        std::cout << it << " ";
+    }
+    std::cout << std::endl;
 }
 
 void test_huffman_decode() {
@@ -178,9 +197,9 @@ TEST_LIST = {
     { "Create table",               test_create_table },
     { "Create nodes",               test_create_nodes },
     { "Create tree",                test_create_tree },
-    { "Tree functions",                 test_tree },
+    { "Tree functions",             test_tree },
     { "Encode Huffman",             test_huffman_encode},
-    { "Decode Huffman",             test_huffman_decode},
-    { "Encode/Decode Huffman",      test_huffman_encode_decode},
+    // { "Decode Huffman",             test_huffman_decode},
+    // { "Encode/Decode Huffman",      test_huffman_encode_decode},
     { NULL, NULL }
 };

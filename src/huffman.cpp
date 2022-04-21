@@ -1,7 +1,12 @@
 #include <huffman.hpp>
 #include <iostream>
+#include <algorithm>
 
 // HuffmanNode
+
+bool MostFrequent::operator() (HuffmanNode * a, HuffmanNode * b) {
+    return a->freq > b->freq;
+}
 
 bool HuffmanNode::is_leaf() {
     return (_left == 0) && (_right == 0);
@@ -47,23 +52,23 @@ void HuffmanNode::inorder_leafs(std::vector<HuffmanNode *> & nodes) {
     }
 }
 
-int HuffmanNode::level(HuffmanNode & root, HuffmanNode & node) {
-    if (&root == 0)
-        return -1;
+int HuffmanNode::distance(HuffmanNode & node) {
+    int tmp;
 
-    if (&node == 0)
-        return -1; 
-    
-    if (&root == &node)
+    if (this == &node)
         return 0;
 
-    int tmp = level(root.left(), node);
-    if (tmp != -1)
-        return tmp + 1;
+    if (_left) {
+        tmp = left().distance(node);
+        if (tmp >= 0) 
+            return tmp + 1;
+    }
 
-    tmp = level(root.right(), node);
-    if (tmp != -1)
-        return tmp + 1;
+    if (_right) {
+        tmp = right().distance(node);
+        if (tmp >= 0) 
+            return tmp + 1;
+    }
 
     return -1;
 }
@@ -91,27 +96,27 @@ HuffmanNode & HuffmanNode::find(int val) {
     return *tmp;
 }
 
-void HuffmanNode::path(HuffmanNode & root, 
-                       HuffmanNode & node, 
-                       std::vector<bool> & path) 
-{
+std::vector<bool> HuffmanNode::path(HuffmanNode & node) {
     HuffmanNode * n = &node;
-    int distance = 0;
+    std::vector<bool> path;
     bool direction;
 
-    while (n != &root) {
-
-        // remove inserted elements avoid dirtying the array
+    // Generate the path from node to root
+    while (n != this) {
         if ((n == 0) || (&n->father() == 0)) {
-            path.erase(path.end()-distance, path.end());
-            return;
+            path.clear();
+            break;
         }
 
-        distance++;
-        direction = n == &n->father().left();
+        direction = (n == &n->father().right());
         path.push_back(direction);
         n = &n->father();
     }
+
+    // Path from root to node
+    reverse(path.begin(), path.end());
+
+    return path;
 }
 
 
@@ -124,35 +129,18 @@ Huffman::Huffman(const std::vector<int> & data) {
 
     table = create_table(data);
     nodes = create_nodes(table);
-    _tree = create_tree(nodes);
+    _tree = &create_tree(nodes);
 }
 
 Huffman::Huffman(const std::unordered_map<int, int> & table) {
     std::vector<HuffmanNode *> nodes;
     nodes = create_nodes(table);
-    _tree = create_tree(nodes);
+    _tree = &create_tree(nodes);
 }
 
-Huffman::Huffman(const HuffmanNode & tree) {
-    _tree = tree;
+Huffman::Huffman(HuffmanNode & tree) {
+    _tree = &tree;
 }
-
-std::vector<bool> Huffman::encode(const std::vector<int> & input) {
-    std::vector<bool> output;
-
-    for (auto it: input) {
-
-    }
-
-    output = {0,1,1,0,1,1};
-
-
-    return output;
-}
-
-// std::vector<int> & Huffman::decode(std::vector<bool> & input) {
-
-// }
 
 std::unordered_map<int, int> Huffman::create_table(const std::vector<int> & data) {
     std::unordered_map<int, int> dict;
@@ -185,10 +173,9 @@ std::vector<HuffmanNode *> Huffman::create_nodes(const std::unordered_map<int, i
     return nodes;
 }
 
-
 HuffmanNode & Huffman::create_tree(const std::vector<HuffmanNode *> & nodes) {
     HuffmanNode *node, *left, *right;
-    std::priority_queue<HuffmanNode*> pqueue(nodes.begin(), nodes.end());
+    HuffmanPqueue pqueue(nodes.begin(), nodes.end());
 
     while (pqueue.size() > 1) {
         left = pqueue.top();
@@ -197,7 +184,10 @@ HuffmanNode & Huffman::create_tree(const std::vector<HuffmanNode *> & nodes) {
         right = pqueue.top();
         pqueue.pop();
 
-        node = new HuffmanNode(0, (left->freq + right->freq));
+        // std::cout << left->freq << " " << left->data << std::endl; 
+        // std::cout << right->freq << " " << right->data << std::endl; 
+
+        node = new HuffmanNode(-1, (left->freq + right->freq));
         node->left(*left);
         node->right(*right);
 
@@ -209,6 +199,29 @@ HuffmanNode & Huffman::create_tree(const std::vector<HuffmanNode *> & nodes) {
 
     return *node;
 }
+
+HuffmanNode & Huffman::root() {
+    return *_tree;
+}
+
+std::vector<bool> Huffman::encode(const std::vector<int> & input) {
+    std::vector<bool> output;
+    HuffmanNode * node;
+
+    for (auto it: input) {
+        node = &_tree->find(it);
+
+        for (auto dir: _tree->path(*node)) {
+            output.push_back(dir);
+        }
+    }
+
+    return output;
+}
+
+// std::vector<int> & Huffman::decode(std::vector<bool> & input) {
+
+// }
 
 
 
