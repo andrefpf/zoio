@@ -181,10 +181,46 @@ void test_huffman_encode() {
 }
 
 void test_huffman_decode() {
+    std::vector<bool> original = {1,0,0, 0,1, 0,1, 1,1, 1,0,1, 0,0, 1,1, 1,1};
+    std::vector<int> expected = {4,0,0,2,8,9,2,2};
+    std::unordered_map<int, int> dict;
+    std::vector<int> output;
+       
+    dict = {
+        {4, 1},
+        {0, 2},
+        {2, 3},
+        {8, 1},
+        {9, 1}
+    };
 
+    Huffman huff(dict);
+    output = huff.decode(original);
+
+    for (int i = 0; i < expected.size(); i++) {
+        TEST_CHECK(expected[i] == output[i]);
+    }
 }
 
 void test_huffman_encode_decode() {
+        std::vector<int> original;
+    std::vector<bool> encoded;
+    std::vector<int> decoded;
+
+    srand(time(NULL));
+
+    for (int i = 0; i < (1 << 23); i++) {
+        original.push_back(rand() % 256);
+    }
+
+    Huffman huff(original);
+
+    encoded = huff.encode(original);
+    decoded = huff.decode(encoded);
+
+    for (int i = 0; i < original.size(); i++) {
+        TEST_CHECK(original[i] == decoded[i]);
+    }
 }
 
 
@@ -194,7 +230,7 @@ TEST_LIST = {
     { "Create tree",                test_create_tree },
     { "Tree functions",             test_tree },
     { "Encode Huffman",             test_huffman_encode},
-    // { "Decode Huffman",             test_huffman_decode},
-    // { "Encode/Decode Huffman",      test_huffman_encode_decode},
+    { "Decode Huffman",             test_huffman_decode},
+    { "Encode/Decode Huffman",      test_huffman_encode_decode},
     { NULL, NULL }
 };

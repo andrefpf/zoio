@@ -184,9 +184,6 @@ HuffmanNode & Huffman::create_tree(const std::vector<HuffmanNode *> & nodes) {
         right = pqueue.top();
         pqueue.pop();
 
-        // std::cout << left->freq << " " << left->data << std::endl; 
-        // std::cout << right->freq << " " << right->data << std::endl; 
-
         node = new HuffmanNode(-1, (left->freq + right->freq));
         node->left(*left);
         node->right(*right);
@@ -219,9 +216,26 @@ std::vector<bool> Huffman::encode(const std::vector<int> & input) {
     return output;
 }
 
-// std::vector<int> & Huffman::decode(std::vector<bool> & input) {
+std::vector<int> Huffman::decode(std::vector<bool> & input) {
+    std::vector<int> output;
+    HuffmanNode * node = _tree;
 
-// }
+    for (auto it: input) {
+        if (it) {
+            node = &node->right();
+        }
+        else {
+            node = &node->left();
+        }
+        
+        if (node->is_leaf()) {
+            output.push_back(node->data);
+            node = _tree;
+        } 
+    }
+
+    return output;
+}
 
 
 
