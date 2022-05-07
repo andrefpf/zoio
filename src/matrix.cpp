@@ -7,6 +7,24 @@ Matrix::Matrix(int width, int height)
     _data = new int[width * height];
 }
 
+Matrix::Matrix(initializer_matrix m) {
+    _height = m.size();
+    _width = m.begin()->size();
+    _data = new int[width() * height()];
+
+    auto r = m.begin();
+    auto c = r->begin();
+
+    for (int i = 0; i < height(); i++) {
+        for (int j = 0; j < width(); j++) {
+            at(i,j) = *c;
+            c++;
+        }
+        r++;
+        c = r->begin();
+    }
+}
+
 int Matrix::width() {
     return _width;
 }

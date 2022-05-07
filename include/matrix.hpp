@@ -3,10 +3,14 @@
 
 #include <vector>
 
+using initializer_matrix = std::initializer_list<std::initializer_list<int>>;
+
+
 class Matrix {
 
 public:
     Matrix(int width, int height);
+    Matrix(initializer_matrix m);
 
     int width();
     int height();
