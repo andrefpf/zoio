@@ -6,8 +6,8 @@
 class DWT2D {
     
 public:
-    static void foward(Matrix m, int levels);
-    static void backward(Matrix m, int levels);
+    static void foward(Matrix & m, int levels);
+    static void backward(Matrix & m, int levels);
 };
 
 #endif

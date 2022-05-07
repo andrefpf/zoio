@@ -4,7 +4,7 @@
 #include <vector>
 
 
-void DWT2D::foward(Matrix m, int levels) {
+void DWT2D::foward(Matrix & m, int levels) {
     std::vector<int> tmp;
 
     for (int i; i < m.height(); i++) {
@@ -20,7 +20,7 @@ void DWT2D::foward(Matrix m, int levels) {
     }
 }
 
-void DWT2D::backward(Matrix m, int levels) {
+void DWT2D::backward(Matrix & m, int levels) {
     std::vector<int> tmp;
 
     for (int i; i < m.height(); i++) {
