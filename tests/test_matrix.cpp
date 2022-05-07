@@ -4,6 +4,22 @@
 
 #include "acutest.h"
 
+void test_constructor() {
+    Matrix m = {
+        {1, 3, 5},
+        {2, 4, 6},
+    };
+
+    TEST_CHECK(m.width() == 3);
+    TEST_CHECK(m.height() == 2);
+
+    TEST_CHECK(m.at(0, 0) == 1);
+    TEST_CHECK(m.at(1, 0) == 2);
+    TEST_CHECK(m.at(0, 1) == 3);
+    TEST_CHECK(m.at(1, 1) == 4);
+    TEST_CHECK(m.at(0, 2) == 5);
+    TEST_CHECK(m.at(1, 2) == 6);
+}
 
 void test_insert_at() {
     Matrix m(16, 9);
@@ -107,6 +123,7 @@ void test_set_rows_cols() {
 }   
 
 TEST_LIST = {
+    { "constructor",        test_constructor },
     { "insert/at",          test_insert_at },
     { "get rows/cols",      test_get_rows_cols },
     { "set rows/cols",      test_set_rows_cols },
