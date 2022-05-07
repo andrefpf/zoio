@@ -11,6 +11,7 @@ class Matrix {
 public:
     Matrix(int width, int height);
     Matrix(initializer_matrix m);
+    ~Matrix();
 
     int width();
     int height();

@@ -1,10 +1,10 @@
 #include <matrix.hpp>
 #include <vector>
 
-Matrix::Matrix(int width, int height)
-: _width(width), _height(height) 
-{
-    _data = new int[width * height];
+Matrix::Matrix(int width, int height) {
+    _height = height;
+    _width = width;
+    _data = new int[_width * _height];
 }
 
 Matrix::Matrix(initializer_matrix m) {
@@ -23,6 +23,10 @@ Matrix::Matrix(initializer_matrix m) {
         r++;
         c = r->begin();
     }
+}
+
+Matrix::~Matrix() {
+    delete _data;
 }
 
 int Matrix::width() {
