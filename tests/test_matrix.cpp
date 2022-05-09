@@ -1,4 +1,5 @@
 #include <matrix.hpp>
+#include <util.hpp>
 #include <iostream>
 #include <vector>
 
@@ -122,10 +123,20 @@ void test_set_rows_cols() {
     }
 }   
 
+void load_save() {
+    Matrix m = {
+        {1, 3, 5},
+        {2, 4, 6},
+    };
+
+    save_cringe_img("ratinhoo", m);
+}
+
 TEST_LIST = {
     { "constructor",        test_constructor },
     { "insert/at",          test_insert_at },
     { "get rows/cols",      test_get_rows_cols },
     { "set rows/cols",      test_set_rows_cols },
+    { "load/save",          load_save},
     { NULL, NULL }
 };
