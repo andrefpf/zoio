@@ -9,6 +9,7 @@ using initializer_matrix = std::initializer_list<std::initializer_list<int>>;
 class Matrix {
 
 public:
+    Matrix() {};
     Matrix(int width, int height);
     Matrix(initializer_matrix m);
     ~Matrix();

@@ -124,12 +124,19 @@ void test_set_rows_cols() {
 }   
 
 void load_save() {
-    Matrix m = {
-        {1, 3, 5},
-        {2, 4, 6},
+    Matrix original = {
+        {1, 31, 5},
+        {2, 49, 6},
     };
 
-    save_cringe_img("ratinhoo", m);
+    save_cringe_img("tmp/load_save", original);
+    Matrix recovered = load_cringe_img("tmp/load_save");
+
+    for (int i = 0; i < original.height(); i++) {
+        for (int j = 0; j < original.width(); j++) {
+            TEST_CHECK(original.at(i,j) == recovered.at(i,j));
+        }
+    }
 }
 
 TEST_LIST = {
