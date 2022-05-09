@@ -67,13 +67,13 @@ std::vector<int> Matrix::col(int n_col) {
 }
 
 void Matrix::row(int n_row, std::vector<int> & v_row) {
-    for (int i = 0; i < _width; i++) {
+    for (int i = 0; i < v_row.size(); i++) {
         at(n_row, i) = v_row[i];
     }
 }
 
 void Matrix::col(int n_col, std::vector<int> & v_col) {
-    for (int i = 0; i < _height; i++) {
+    for (int i = 0; i < v_col.size(); i++) {
         at(i, n_col) = v_col[i];
     }
 }

@@ -6,32 +6,50 @@
 
 void DWT2D::foward(Matrix & m, int levels) {
     std::vector<int> tmp;
+    int w = m.width();
+    int h = m.height();
 
-    for (int i = 0; i < m.height(); i++) {
-        tmp = m.row(i);
-        DWT::foward(tmp, levels);
-        m.row(i, tmp);
-    }
+    for (int level = 0; level < levels; level++) {
+        for (int i = 0; i < h; i++) {
+            tmp = m.row(i);
+            tmp.resize(w);
+            DWT::foward(tmp, 1);
+            m.row(i, tmp);
+        }
 
-    for (int i = 0; i < m.width(); i++) {
-        tmp = m.col(i);
-        DWT::foward(tmp, levels);
-        m.col(i, tmp);
+        for (int i = 0; i < w; i++) {
+            tmp = m.col(i);
+            tmp.resize(h);
+            DWT::foward(tmp, 1);
+            m.col(i, tmp);
+        }
+
+        w /= 2;
+        h /= 2;
     }
 }
 
 void DWT2D::backward(Matrix & m, int levels) {
     std::vector<int> tmp;
+    int w = m.width() >> levels;
+    int h = m.height() >> levels;
 
-    for (int i = 0; i < m.height(); i++) {
-        tmp = m.row(i);
-        DWT::backward(tmp, levels);
-        m.row(i, tmp);
-    }
+    for (int level = levels; level > 0; level--) {
+        w *= 2;
+        h *= 2;
 
-    for (int i = 0; i < m.width(); i++) {
-        tmp = m.col(i);
-        DWT::backward(tmp, levels);
-        m.col(i, tmp);
+        for (int i = 0; i < h; i++) {
+            tmp = m.row(i);
+            tmp.resize(w);
+            DWT::backward(tmp, 1);
+            m.row(i, tmp);
+        }
+
+        for (int i = 0; i < w; i++) {
+            tmp = m.col(i);
+            tmp.resize(h);
+            DWT::backward(tmp, 1);
+            m.col(i, tmp);
+        }
     }
 }

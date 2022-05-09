@@ -13,13 +13,13 @@ void test_encode_dwt_2d() {
     };
 
     Matrix expected = {
-        {1, 2, 1, 1},
-        {2, 0, 0, 0},
-        {1, 0, 0, 0},
-        {1, 0, 0, 0},
+        {1, 3, 1, 1},
+        {3, 5, 1, 1},
+        {1, 1, 0, 0},
+        {1, 1, 0, 0},
     };
 
-    DWT2D::foward(original, 2);
+    DWT2D::foward(original, 1);
 
     for (int i = 0; i < original.height(); i++) {
         for (int j = 0; j < original.width(); j++) {
@@ -30,10 +30,10 @@ void test_encode_dwt_2d() {
 
 void test_decode_dwt_2d() {
     Matrix original = {
-        {1, 2, 1, 1},
-        {2, 0, 0, 0},
-        {1, 0, 0, 0},
-        {1, 0, 0, 0},
+        {1, 3, 1, 1},
+        {3, 5, 1, 1},
+        {1, 1, 0, 0},
+        {1, 1, 0, 0},
     };
 
     Matrix expected = {
@@ -43,7 +43,7 @@ void test_decode_dwt_2d() {
         {4, 5, 6, 7},
     };
 
-    DWT2D::backward(original, 2);
+    DWT2D::backward(original, 1);
 
     for (int i = 0; i < expected.height(); i++) {
         for (int j = 0; j < expected.width(); j++) {
