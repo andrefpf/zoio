@@ -21,9 +21,9 @@ void test_encode_dwt_2d() {
 
     DWT2D::foward(original, 2);
 
-    for (int i = 0; i < expected.height(); i++) {
-        for (int j = 0; j < expected.width(); j++) {
-            TEST_CHECK(expected.at(i,j) == original.at(i,j));
+    for (int i = 0; i < original.height(); i++) {
+        for (int j = 0; j < original.width(); j++) {
+            TEST_CHECK(original.at(i,j) == expected.at(i,j));
         }
     }
 }
