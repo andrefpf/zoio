@@ -1,14 +1,24 @@
+#include <image/image.hpp>
+#include <image/pgm.hpp>
+#include <metrics/psnr.hpp>
 #include <dwt2d.hpp>
 #include <matrix.hpp>
 #include <util.hpp>
-#include <image/image.hpp>
-#include <image/pgm.hpp>
 #include <string>
 
-using namespace zoio;
+#include "acutest.h"
+#define CLOSE_ENOUGH(a, b)(TEST_CHECK((a - b) <= 1e-6 ))
 
-int main() {
-    Image img = read_pgm("data/lena.pgm");
-    write_pgm(img, "data/new_lena.pgm");
-    return 0;
+void read_write_pgm() {
+    zoio::Image image_a = zoio::read_pgm("data/shell.pgm");
+    zoio::write_pgm(image_a, "/tmp/shell.pgm");
+    zoio::Image image_b = zoio::read_pgm("/tmp/shell.pgm");
+
+    double psnr = zoio::psnr(image_a, image_b);
+    TEST_CHECK(psnr == inf);
 }
+
+TEST_LIST = {
+    { "PGM",         read_write_pgm },
+    { NULL,          NULL }
+};

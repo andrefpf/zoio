@@ -1,12 +1,11 @@
 #include <metrics/psnr.hpp>
 #include <image/image.hpp>
 #include <image/pgm.hpp>
+#include <util.hpp>
 #include <iostream>
 #include <iomanip>
-#include <limits>
 
 #include "acutest.h"
-
 #define CLOSE_ENOUGH(a, b)(TEST_CHECK((a - b) <= 1e-6 ))
 
 void deform_image(zoio::Image & image) {
@@ -34,7 +33,6 @@ void test_mse() {
 
 void test_psnr() {
     double psnr;
-    double inf = std::numeric_limits<double>::infinity();
 
     zoio::Image image_a = zoio::read_pgm("data/lena.pgm");
     zoio::Image image_b = zoio::read_pgm("data/lena.pgm");
@@ -46,8 +44,6 @@ void test_psnr() {
     psnr = zoio::psnr(image_a, image_b);
     CLOSE_ENOUGH(psnr, 17.906713);
 }
-
-
 
 TEST_LIST = {
     { "MSE",         test_mse },
