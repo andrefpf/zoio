@@ -1,5 +1,5 @@
-#ifndef ZOIO_PGM_IO_
-#define ZOIO_PGM_IO_
+#ifndef ZOIO_PGM_IO_H_
+#define ZOIO_PGM_IO_H_
 
 #include <string>
 #include <image/image.hpp>

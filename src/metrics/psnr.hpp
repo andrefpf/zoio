@@ -1,5 +1,5 @@
-#ifndef ZOIO_PSNR_
-#define ZOIO_PSNR_
+#ifndef ZOIO_PSNR_H_
+#define ZOIO_PSNR_H_
 
 #include <image/image.hpp>
 

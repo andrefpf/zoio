@@ -1,5 +1,5 @@
-#ifndef ZOIO_IMAGE_
-#define ZOIO_IMAGE_
+#ifndef ZOIO_IMAGE_H_
+#define ZOIO_IMAGE_H_
 
 #include <util.hpp>
 #include <vector>
