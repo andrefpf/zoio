@@ -51,7 +51,7 @@ void test_long_dwt_1d() {
 
 TEST_LIST = {
     { "Encode DWT 1D",         test_encode_dwt_1d },
-    { "Decode DWT 1D",        test_decode_dwt_1d },
-    { "Encode/Decode DWT 1D",    test_long_dwt_1d},
+    { "Decode DWT 1D",         test_decode_dwt_1d },
+    { "Encode/Decode DWT 1D",  test_long_dwt_1d},
     { NULL, NULL }
 };

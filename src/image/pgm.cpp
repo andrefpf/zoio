@@ -47,9 +47,9 @@ Image read_pgm(std::string path) {
 
     Image image(width, height);
 
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            file >> std::noskipws >> image.at(j, i);
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            file >> std::noskipws >> image.at(i, j);
         }
     }
 
@@ -73,9 +73,9 @@ void write_pgm(Image image, std::string path) {
     file << width << " " << height << std::endl;
     file << 255 << std::endl;
     
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            file << image.at(j, i);
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            file << image.at(i, j);
         }
     }
 }
