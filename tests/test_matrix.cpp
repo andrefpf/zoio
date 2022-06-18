@@ -123,27 +123,11 @@ void test_set_rows_cols() {
     }
 }   
 
-void load_save() {
-    Matrix original = {
-        {1, 31, 5},
-        {2, 49, 6},
-    };
-
-    save_cringe_img("tmp/load_save", original);
-    Matrix recovered = load_cringe_img("tmp/load_save");
-
-    for (int i = 0; i < original.height(); i++) {
-        for (int j = 0; j < original.width(); j++) {
-            TEST_CHECK(original.at(i,j) == recovered.at(i,j));
-        }
-    }
-}
 
 TEST_LIST = {
     { "constructor",        test_constructor },
     { "insert/at",          test_insert_at },
     { "get rows/cols",      test_get_rows_cols },
     { "set rows/cols",      test_set_rows_cols },
-    { "load/save",          load_save},
     { NULL, NULL }
 };
