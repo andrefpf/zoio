@@ -5,6 +5,6 @@
 #include <limits>
 
 using bytes_t = int8_t;
-double inf = std::numeric_limits<double>::infinity();
+extern double inf;
 
 #endif
