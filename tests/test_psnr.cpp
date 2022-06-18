@@ -17,7 +17,6 @@ void deform_image(zoio::Image & image) {
                 image.at(i,j) /= 2;
         }
     }
-    zoio::write_pgm(image, "data/deformed_lena.pgm");
 }
 
 void test_mse() {
