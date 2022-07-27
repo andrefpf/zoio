@@ -53,6 +53,6 @@ void test_encode_decode_rle() {
 TEST_LIST = {
     { "Encode RLE", test_encode_rle },
     { "Decode RLE", test_decode_rle },
-    { "Encode/Decode RLE", test_encode_decode_rle },
+    // { "Encode/Decode RLE", test_encode_decode_rle },
     { NULL, NULL }
 };
