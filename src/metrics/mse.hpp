@@ -4,9 +4,11 @@
 #include "../image/image.hpp"
 
 namespace zoio {
+namespace metrics {
 
 double mse(Image image_a, Image image_b);
 
+}
 } // zoio
 
 #endif 

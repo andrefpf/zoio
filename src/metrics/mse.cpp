@@ -3,6 +3,7 @@
 #include <math.h>
 
 namespace zoio {
+namespace metrics {
 
 double mse(Image image_a, Image image_b) {
     double tmp = 0;
@@ -24,4 +25,5 @@ double mse(Image image_a, Image image_b) {
     return sum / (image_a.width() * image_a.height());
 }
 
+} // namespace metrics
 } // namespace zoio

@@ -5,6 +5,7 @@
 #include <string>
 
 namespace zoio {
+namespace metrics {
 
 class Time {
 
@@ -18,6 +19,7 @@ private:
     
 };
 
+}
 } // zoio
 
 #endif 

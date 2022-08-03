@@ -2,6 +2,7 @@
 #include <iostream>
 
 namespace zoio {
+namespace metrics {
 
 Time::Time(std::string name) {
     _name = name;
@@ -16,4 +17,5 @@ Time::~Time() {
     std::cout << _name << " took " << delta << " [ns]" << std::endl;
 }
 
+} // namespace metrics
 } // namespace zoio

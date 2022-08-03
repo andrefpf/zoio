@@ -5,9 +5,11 @@
 #include "mse.hpp"
 
 namespace zoio {
+namespace metrics {
 
 double psnr(Image image_a, Image image_b);
 
+}
 } // zoio
 
 #endif 

@@ -14,7 +14,7 @@ void read_write_pgm() {
     zoio::write_pgm(image_a, "/tmp/shell.pgm");
     zoio::Image image_b = zoio::read_pgm("/tmp/shell.pgm");
 
-    double psnr = zoio::psnr(image_a, image_b);
+    double psnr = zoio::metrics::psnr(image_a, image_b);
     TEST_CHECK(psnr == inf);
 }
 

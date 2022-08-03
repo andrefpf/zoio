@@ -3,6 +3,7 @@
 #include <math.h>
 
 namespace zoio {
+namespace metrics {
 
 double psnr(Image image_a, Image image_b) {
     double _mse = mse(image_a, image_b);
@@ -10,4 +11,5 @@ double psnr(Image image_a, Image image_b) {
     return 10 * log10(ratio);
 }
 
+} // namespace metrics
 } // namespace zoio
