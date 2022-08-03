@@ -1,10 +1,9 @@
-#include <dwt2d.hpp>
-#include <dwt.hpp>
+#include "dwt2d.hpp"
+#include "dwt.hpp"
 #include <iostream>
 #include <vector>
 
-
-void DWT2D::foward(Matrix & m, int levels) {
+void DWT2D::foward(Matrix &m, int levels) {
     std::vector<int> tmp;
     int w = m.width();
     int h = m.height();
@@ -29,7 +28,7 @@ void DWT2D::foward(Matrix & m, int levels) {
     }
 }
 
-void DWT2D::backward(Matrix & m, int levels) {
+void DWT2D::backward(Matrix &m, int levels) {
     std::vector<int> tmp;
     int w = m.width() >> levels;
     int h = m.height() >> levels;

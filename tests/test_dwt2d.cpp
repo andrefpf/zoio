@@ -1,8 +1,7 @@
-#include <dwt2d.hpp>
+#include "dwt2d.hpp"
 #include <iostream>
 
 #include "acutest.h"
-
 
 void test_encode_dwt_2d() {
     Matrix original = {
@@ -23,7 +22,7 @@ void test_encode_dwt_2d() {
 
     for (int i = 0; i < original.height(); i++) {
         for (int j = 0; j < original.width(); j++) {
-            TEST_CHECK(original.at(i,j) == expected.at(i,j));
+            TEST_CHECK(original.at(i, j) == expected.at(i, j));
         }
     }
 }
@@ -47,7 +46,7 @@ void test_decode_dwt_2d() {
 
     for (int i = 0; i < expected.height(); i++) {
         for (int j = 0; j < expected.width(); j++) {
-            TEST_CHECK(expected.at(i,j) == original.at(i,j));
+            TEST_CHECK(expected.at(i, j) == original.at(i, j));
         }
     }
 }
@@ -65,8 +64,8 @@ void test_long_dwt_2d() {
     for (int i = 0; i < h; i++) {
         for (int j = 0; j < w; j++) {
             r = rand() % 255;
-            original.at(i,j) = r;
-            tmp.at(i,j) = r;
+            original.at(i, j) = r;
+            tmp.at(i, j) = r;
         }
     }
 
@@ -75,14 +74,12 @@ void test_long_dwt_2d() {
 
     for (int i = 0; i < h; i++) {
         for (int j = 0; j < w; j++) {
-            TEST_CHECK(original.at(i,j) == tmp.at(i,j));
+            TEST_CHECK(original.at(i, j) == tmp.at(i, j));
         }
     }
 }
 
-TEST_LIST = {
-    { "Encode DWT 2D",          test_encode_dwt_2d },
-    { "Decode DWT 2D",          test_decode_dwt_2d },
-    // { "Encode/Decode DWT 2D",   test_long_dwt_2d},
-    { NULL, NULL }
-};
+TEST_LIST = {{"Encode DWT 2D", test_encode_dwt_2d},
+             {"Decode DWT 2D", test_decode_dwt_2d},
+             // { "Encode/Decode DWT 2D",   test_long_dwt_2d},
+             {NULL, NULL}};

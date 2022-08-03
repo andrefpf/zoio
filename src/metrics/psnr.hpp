@@ -1,8 +1,8 @@
 #ifndef ZOIO_PSNR_H_
 #define ZOIO_PSNR_H_
 
-#include <image/image.hpp>
-#include <metrics/mse.hpp>
+#include "../image/image.hpp"
+#include "mse.hpp"
 
 namespace zoio {
 

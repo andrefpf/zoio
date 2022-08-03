@@ -1,6 +1,5 @@
-#include <matrix.hpp>
+#include "matrix.hpp"
 #include <vector>
-
 
 Matrix::Matrix(int width, int height) {
     _height = height;
@@ -18,7 +17,7 @@ Matrix::Matrix(initializer_matrix m) {
 
     for (int i = 0; i < height(); i++) {
         for (int j = 0; j < width(); j++) {
-            at(i,j) = *c;
+            at(i, j) = *c;
             c++;
         }
         r++;
@@ -26,24 +25,16 @@ Matrix::Matrix(initializer_matrix m) {
     }
 }
 
-Matrix::~Matrix() {
-    delete _data;
-}
+Matrix::~Matrix() { delete _data; }
 
-int Matrix::width() {
-    return _width;
-}
+int Matrix::width() { return _width; }
 
-int Matrix::height() {
-    return _height;
-}
+int Matrix::height() { return _height; }
 
-int & Matrix::at(int n_row, int n_col) {
-    return _data[n_col + n_row * _width];
-}
+int &Matrix::at(int n_row, int n_col) { return _data[n_col + n_row * _width]; }
 
 void Matrix::insert(int n_row, int n_col, int val) {
-     _data[n_col + n_row * _width] = val;
+    _data[n_col + n_row * _width] = val;
 }
 
 std::vector<int> Matrix::row(int n_row) {
@@ -58,7 +49,7 @@ std::vector<int> Matrix::row(int n_row) {
 
 std::vector<int> Matrix::col(int n_col) {
     std::vector<int> out(_height);
-    
+
     for (int i = 0; i < _height; i++) {
         out[i] = at(i, n_col);
     }
@@ -66,15 +57,14 @@ std::vector<int> Matrix::col(int n_col) {
     return out;
 }
 
-void Matrix::row(int n_row, std::vector<int> & v_row) {
+void Matrix::row(int n_row, std::vector<int> &v_row) {
     for (int i = 0; i < v_row.size(); i++) {
         at(n_row, i) = v_row[i];
     }
 }
 
-void Matrix::col(int n_col, std::vector<int> & v_col) {
+void Matrix::col(int n_col, std::vector<int> &v_col) {
     for (int i = 0; i < v_col.size(); i++) {
         at(i, n_col) = v_col[i];
     }
 }
-

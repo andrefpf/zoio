@@ -1,7 +1,7 @@
 #ifndef ZOIO_MSE_H_
 #define ZOIO_MSE_H_
 
-#include <image/image.hpp>
+#include "../image/image.hpp"
 
 namespace zoio {
 

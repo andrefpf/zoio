@@ -1,4 +1,4 @@
-#include <metrics/mse.hpp>
+#include "mse.hpp"
 #include <iostream>
 #include <math.h>
 
@@ -16,7 +16,7 @@ double mse(Image image_a, Image image_b) {
 
     for (int i = 0; i < image_a.width(); i++) {
         for (int j = 0; j < image_a.height(); j++) {
-            tmp = image_a.at(i,j) - image_b.at(i,j);
+            tmp = image_a.at(i, j) - image_b.at(i, j);
             sum += tmp * tmp;
         }
     }
@@ -24,4 +24,4 @@ double mse(Image image_a, Image image_b) {
     return sum / (image_a.width() * image_a.height());
 }
 
-} // zoio
+} // namespace zoio

@@ -2,7 +2,7 @@
 #define ZOIO_PGM_IO_H_
 
 #include <string>
-#include <image/image.hpp>
+#include "image.hpp"
 
 namespace zoio {
 

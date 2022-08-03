@@ -1,3 +1,6 @@
+CC = clang
+
+HPP_FILES = $(wildcard ./src/*.hpp) $(wildcard ./src/*/*.cpp)
 CPP_FILES = $(wildcard ./src/*.cpp) $(wildcard ./src/*/*.cpp)
 OBJ_FILES = $(subst .cpp,.o,$(subst src,build,$(CPP_FILES)))
 
@@ -12,18 +15,22 @@ $(shell mkdir -p $(DIRECTORIES))
 .PHONY: lib clean tests
 
 lib: $(OBJ_FILES)
-	g++ -o build/libzoio.so $^ -shared
+	$(CC) -o build/libzoio.so $^ -shared -lstdc++ 
+
+format:
+	clang-format -i $(CPP_FILES) $(HPP_FILES)
+	clang-format -i $(CPP_TESTS)
 
 tests: lib $(OBJ_TESTS)
 
 clean:
-	@rm -rf ./build/*
+	@ rm -rf ./build/*
 
 build/test_%.o: tests/test_%.cpp .FORCE
-	@echo
-	@echo $@
-	@g++ $< -o $@ -I src/ build/libzoio.so
-	@./$@ --time
+	@ echo
+	@ echo $@
+	@ $(CC) $< -o $@ -I src/ build/libzoio.so -lstdc++
+	@ ./$@ --time
 
 build/%.o: src/%.cpp
-	g++ $< -o $@ -I src/ -c -Wfatal-errors -fPIC
+	$(CC) $< -o $@ -c -Wfatal-errors -fPIC

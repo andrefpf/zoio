@@ -1,4 +1,4 @@
-#include <metrics/time.hpp>
+#include "time.hpp"
 #include <iostream>
 
 namespace zoio {
@@ -10,8 +10,10 @@ Time::Time(std::string name) {
 
 Time::~Time() {
     auto end = std::chrono::steady_clock::now();
-    auto delta = std::chrono::duration_cast<std::chrono::nanoseconds>(end - _begin).count();
+    auto delta =
+        std::chrono::duration_cast<std::chrono::nanoseconds>(end - _begin)
+            .count();
     std::cout << _name << " took " << delta << " [ns]" << std::endl;
 }
 
-} // zoio 
+} // namespace zoio

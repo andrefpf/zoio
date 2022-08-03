@@ -9,7 +9,7 @@ namespace dwt {
 void foward(std::vector<int> &input, int levels);
 void backward(std::vector<int> &input, int levels);
 
-} // dwt
-} // zoio
+} // namespace dwt
+} // namespace zoio
 
 #endif

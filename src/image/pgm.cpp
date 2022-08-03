@@ -1,8 +1,8 @@
-#include <image/pgm.hpp>
-#include <iostream>
-#include <fstream>
-#include <sstream>
+#include "pgm.hpp"
 #include <assert.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 namespace zoio {
 
@@ -13,36 +13,37 @@ Image read_pgm(std::string path) {
     std::string line;
     std::ifstream file;
     std::stringstream ss;
-    
+
     file.open(path);
 
     if (!file.is_open()) {
         std::cerr << "Could not open the file." << std::endl;
     }
 
-    file >> line; 
+    file >> line;
     if (line != "P5") {
         std::cerr << "This is not a valid pgm file." << std::endl;
     }
 
     do {
         getline(file, line);
-    } while (line.empty() | line[0] == '#');
-    
+    } while ((line[0] == '#') | line.empty());
+
     ss << line;
     ss >> width;
     ss >> height;
 
     do {
         getline(file, line);
-    } while (line.empty() | line[0] == '#');
+    } while ((line[0] == '#') | line.empty());
 
     ss.clear();
     ss << line;
     ss >> max;
 
     if (max > 256) {
-        std::cerr << "Zoio still do not support pgm files with 16 bits." << std::endl;
+        std::cerr << "Zoio still do not support pgm files with 16 bits."
+                  << std::endl;
     }
 
     Image image(width, height);
@@ -55,7 +56,6 @@ Image read_pgm(std::string path) {
 
     return image;
 }
-
 
 void write_pgm(Image image, std::string path) {
     std::ofstream file;
@@ -72,7 +72,7 @@ void write_pgm(Image image, std::string path) {
     file << "# CREATOR: ZOIO developer version" << std::endl;
     file << width << " " << height << std::endl;
     file << 255 << std::endl;
-    
+
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             file << image.at(i, j);
@@ -80,4 +80,4 @@ void write_pgm(Image image, std::string path) {
     }
 }
 
-} // zoio
+} // namespace zoio

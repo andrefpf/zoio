@@ -1,19 +1,19 @@
-#include <metrics/psnr.hpp>
-#include <image/image.hpp>
-#include <image/pgm.hpp>
-#include <util.hpp>
-#include <iostream>
+#include "image/image.hpp"
+#include "image/pgm.hpp"
+#include "metrics/psnr.hpp"
+#include "util.hpp"
 #include <iomanip>
+#include <iostream>
 
 #include "acutest.h"
-#define CLOSE_ENOUGH(a, b)(TEST_CHECK((a - b) <= 1e-6 ))
+#define CLOSE_ENOUGH(a, b) (TEST_CHECK((a - b) <= 1e-6))
 
-void deform_image(zoio::Image & image) {
+void deform_image(zoio::Image &image) {
     for (int i = 0; i < image.width(); i++) {
         for (int j = 0; j < image.height(); j++) {
-            // Checkered image 
-            if ((i/16 + j/16) % 2 == 0) 
-                image.at(i,j) /= 2;
+            // Checkered image
+            if ((i / 16 + j / 16) % 2 == 0)
+                image.at(i, j) /= 2;
         }
     }
 }
@@ -45,8 +45,4 @@ void test_psnr() {
     CLOSE_ENOUGH(psnr, 17.906713);
 }
 
-TEST_LIST = {
-    { "MSE",         test_mse },
-    { "PSNR",        test_psnr},
-    { NULL,          NULL }
-};
+TEST_LIST = {{"MSE", test_mse}, {"PSNR", test_psnr}, {NULL, NULL}};
