@@ -4,60 +4,66 @@
 
 #include "acutest.h"
 
-void test_encode_dwt() {
-    std::vector<int> original{1, 2, 3, 4, 5, 6, 7, 8};
-    std::vector<int> expected{1, 4, 2, 2, 1, 1, 1, 1};
+void test_haar_encode() {
+    std::vector<float> original{10, 20, 30, 40, 50, 60, 70, 80};
+    std::vector<float> expected{25, 65, 10, 10, 5, 5, 5, 5};
 
-    int levels = 1;
-    zoio::dwt::foward(original, levels);
+    std::vector<float> low_pass = {-1, 1};
+    std::vector<float> high_pass = {1, 1};
 
-    for (int i = 0; i < expected.size(); i++)
-        std::cout << original[i] << " ";
-    std::cout << std::endl;
-
-    // for (int i = 0; i < expected.size(); i++)
-    //     TEST_CHECK(expected[i] == original[i]);
-}
-
-void test_decode_dwt() {
-    // std::vector<int> original{1, 5, 2, 2, 1, 1, 1, 1};
-    std::vector<int> original{3, 7, 11, 15, 1, 1, 1, 1};
-    std::vector<int> expected{1, 2, 3, 4, 5, 6, 7, 8};
-
-    int levels = 1;
-    zoio::dwt::backward(original, levels);
-
-    for (int i = 0; i < expected.size(); i++)
-        std::cout << original[i] << " ";
-    std::cout << std::endl;
+    int levels = 2;
+    zoio::dwt::foward(original, levels, high_pass, low_pass);
 
     // for (int i = 0; i < expected.size(); i++)
-    //     TEST_CHECK(expected[i] == original[i]);
+    //     std::cout << original[i] << " ";
+    // std::cout << std::endl;
+
+    for (int i = 0; i < expected.size(); i++)
+        TEST_CHECK(expected[i] == original[i]);
 }
 
-// void test_long_dwt() {
-//     int levels = 23;
+void test_haar_decode() {
+    std::vector<float> original{25, 65, 10, 10, 5, 5, 5, 5};
+    std::vector<float> expected{10, 20, 30, 40, 50, 60, 70, 80};
 
-//     std::vector<int> original;
+    std::vector<float> low_pass = {-1, 1};
+    std::vector<float> high_pass = {1, 1};
 
-//     for (int i = 0; i < (1 << levels); i++) {
-//         original.push_back(i);
-//     }
+    int levels = 2;
+    zoio::dwt::backward(original, levels, high_pass, low_pass);
 
-//     std::vector<int> tmp(original.begin(), original.end());
+    // for (int i = 0; i < expected.size(); i++)
+    //     std::cout << original[i] << " ";
+    // std::cout << std::endl;
 
-//     for (int i = 0; i < original.size(); i++)
-//         TEST_CHECK(original[i] == tmp[i]);
+    for (int i = 0; i < expected.size(); i++)
+        TEST_CHECK(expected[i] == original[i]);
+}
 
-//     dwt::foward(tmp, levels);
-//     dwt::backward(tmp, levels);
+void test_haar_encode_decode() {
+    std::vector<float> expected{10, 20, 30, 40, 50, 60, 70, 80};
+    std::vector<float> data(expected.begin(), expected.end());
 
-//     for (int i = 0; i < original.size(); i++)
-//         TEST_CHECK(original[i] == tmp[i]);
+    int levels = 3;
+    std::vector<float> low_pass = {-1, 1};
+    std::vector<float> high_pass = {1, 1};
 
-// }
+    zoio::dwt::foward(data, levels, high_pass, low_pass);
 
-TEST_LIST = {{"Encode DWT 1D", test_encode_dwt},
-             {"Decode DWT 1D", test_decode_dwt},
-             // { "Encode/Decode DWT 1D",  test_long_dwt_1d},
+    // std::cout << std::endl;
+    // for (int i = 0; i < expected.size(); i++)
+    //     std::cout << data[i] << " ";
+    // std::cout << std::endl;
+
+    zoio::dwt::backward(data, levels, high_pass, low_pass);
+
+    std::cout << std::endl;
+    for (int i = 0; i < expected.size(); i++)
+        TEST_CHECK(expected[i] == data[i]);
+    // std::cout << data[i] << " == " << expected[i] << std::endl;
+}
+
+TEST_LIST = {{"Encode Haar Wavelet 1D", test_haar_encode},
+             {"Decode Haar Wavelet 1D", test_haar_decode},
+             {"Encode/Decode Haar Wavelet 1D", test_haar_encode_decode},
              {NULL, NULL}};

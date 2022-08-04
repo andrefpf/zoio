@@ -5,28 +5,34 @@
 namespace zoio {
 namespace dwt {
 
-void foward(std::vector<int> &input, int levels) {
-    std::vector<int> low_pass = {-1, 1};
-    std::vector<int> high_pass = {1, 1};
+/*
+Essa implementação com certeza está errada. Preciso entender a forma como os
+filtros devem ser utilizados. Provávelmente não deveria estar dividindo pelo
+filter_size.
+*/
+
+void foward(std::vector<float> &input, int levels, std::vector<float> high_pass,
+            std::vector<float> low_pass) {
+
     std::vector<int> tmp(input.size());
     int half = input.size() / 2;
+    int filter_size = high_pass.size();
+
     int low;
     int high;
-
-    float k = 0.5;
 
     for (int level = 0; level < levels; level++) {
         for (int i = 0; i < half; i++) {
             high = 0;
             low = 0;
 
-            for (int j = 0; j < 2; j++) {
+            for (int j = 0; j < filter_size; j++) {
                 high += input[2 * i + j] * high_pass[j];
                 low += input[2 * i + j] * low_pass[j];
             }
 
-            tmp[i] = ceil(high * k);
-            tmp[i + half] = ceil(low * k);
+            tmp[i] = high / filter_size;
+            tmp[i + half] = low / filter_size;
         }
 
         for (int i = 0; i < half * 2; i++) {
@@ -37,37 +43,35 @@ void foward(std::vector<int> &input, int levels) {
     }
 }
 
-void backward(std::vector<int> &input, int levels) {
-    std::vector<int> low_pass = {-1, 1};
-    std::vector<int> high_pass = {1, 1};
-    std::vector<int> tmp(input.size());
+void backward(std::vector<float> &input, int levels,
+              std::vector<float> high_pass, std::vector<float> low_pass) {
 
+    std::vector<float> tmp(input.size());
     int half = input.size() >> levels;
-    int low;
-    int high;
+    int filter_size = high_pass.size();
 
-    float k = 0.5;
+    float low;
+    float high;
 
-    for (int i = 0; i < half; i++) {
-        high = input[i];
-        low = input[i + half];
+    for (int level = 0; level < levels; level++) {
+        for (int i = 0; i < half; i++) {
+            high = input[i];
+            low = input[i + half];
 
-        for (int j = 0; j < 2; j++) {
-            tmp[2 * i + j] += floor(high * high_pass[j] * k);
-            tmp[2 * i + j] += floor(low * low_pass[j] * k);
+            for (int j = 0; j < filter_size; j++) {
+                tmp[2 * i + j] += high * high_pass[j];
+                tmp[2 * i + j] += low * low_pass[j];
+            }
         }
-    }
 
-    for (int i = 0; i < half * 2; i++) {
-        input[i] = tmp[i];
+        for (int i = 0; i < half * 2; i++) {
+            input[i] = tmp[i];
+            tmp[i] = 0;
+        }
+
+        half *= 2;
     }
 }
 
 } // namespace dwt
 } // namespace zoio
-
-// H = a1 * h1 + a2 * h2
-// L = a1 * l1 + a2 * l2
-
-// a1 = (H - a2 * h2) / h1
-// a1 = (L - a2 * l2) / l1

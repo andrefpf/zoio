@@ -6,8 +6,11 @@
 namespace zoio {
 namespace dwt {
 
-void foward(std::vector<int> &input, int levels);
-void backward(std::vector<int> &input, int levels);
+void foward(std::vector<float> &input, int levels, std::vector<float> high_pass,
+            std::vector<float> low_pass);
+
+void backward(std::vector<float> &input, int levels,
+              std::vector<float> high_pass, std::vector<float> low_pass);
 
 } // namespace dwt
 } // namespace zoio
