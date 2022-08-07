@@ -14,12 +14,12 @@ filter_size.
 void foward(std::vector<float> &input, int levels, std::vector<float> high_pass,
             std::vector<float> low_pass) {
 
-    std::vector<int> tmp(input.size());
+    std::vector<float> tmp(input.size());
     int half = input.size() / 2;
     int filter_size = high_pass.size();
 
-    int low;
-    int high;
+    float low;
+    float high;
 
     for (int level = 0; level < levels; level++) {
         for (int i = 0; i < half; i++) {
@@ -31,8 +31,8 @@ void foward(std::vector<float> &input, int levels, std::vector<float> high_pass,
                 low += input[2 * i + j] * low_pass[j];
             }
 
-            tmp[i] = high / filter_size;
-            tmp[i + half] = low / filter_size;
+            tmp[i] = low;
+            tmp[i + half] = high;
         }
 
         for (int i = 0; i < half * 2; i++) {
@@ -55,8 +55,8 @@ void backward(std::vector<float> &input, int levels,
 
     for (int level = 0; level < levels; level++) {
         for (int i = 0; i < half; i++) {
-            high = input[i];
-            low = input[i + half];
+            low = input[i];
+            high = input[i + half];
 
             for (int j = 0; j < filter_size; j++) {
                 tmp[2 * i + j] += high * high_pass[j];
